@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -15,19 +13,22 @@ public class GameManager : MonoBehaviour
     private const string failText = "La distancia ingresada no es correcta";
 
     #region Class logic
+
     public void Result()
     {
-        float delta = Ball.Instance.X_Distance - PlayerDistance;
-        float percent = delta * Ball.Instance.X_Distance / oneHundred;
+        float fivePercent = Ball.Instance.X_Distance == ushort.MinValue ? maxErrorPercentAllowed : (5/oneHundred) * Ball.Instance.X_Distance;
+        float minVale = Ball.Instance.X_Distance - fivePercent;
+        float maxValue = Ball.Instance.X_Distance + fivePercent;
+
         Messeger.Instance.buttom.onClick.AddListener(ReloadGame);
 
-        if (percent >= maxErrorPercentAllowed)
+        if (!(PlayerDistance >= minVale && PlayerDistance <= maxValue))
             Messeger.Instance.ShowMessage(failText, Messeger.MessageType.Warning);
         else
             Messeger.Instance.ShowMessage(victoryText, Messeger.MessageType.Okey);
     }
 
-    public void ReloadGame() =>  SceneManager.LoadScene(ushort.MinValue);
+    public void ReloadGame() => SceneManager.LoadScene(ushort.MinValue);
 
     #endregion
 

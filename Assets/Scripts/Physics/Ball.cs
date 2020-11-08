@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
         if (WouldEndSimulation)
         {
             rb.simulated = !WouldEndSimulation;
-            X_Distance = rb.position.x; //Cause x distances its equal to Xf - Xi, but Xi its equal to 0
+            X_Distance = Mathf.Max(ushort.MinValue, rb.position.x); //Cause x distances its equal to Xf - Xi, but Xi its equal to 0
             transform.position = new Vector3(transform.position.x, ushort.MinValue, ushort.MinValue);
             GameManager.Instance.Result();
         }
