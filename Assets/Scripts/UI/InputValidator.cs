@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Globalization;
 
 public class InputValidator : MonoBehaviour
 {
@@ -18,12 +19,12 @@ public class InputValidator : MonoBehaviour
     {
         try
         {
-            if (string.Equals(text, negativeSing))
+            if (text.Contains(negativeSing))
             {
                 inputField.text = string.Empty;
                 return;
             }
-            value = Mathf.Clamp(float.Parse(text), minValue, maxValue);
+            value = Mathf.Clamp(float.Parse(text, CultureInfo.InvariantCulture.NumberFormat), minValue, maxValue);
             inputField.text = value.ToString();
         }
         catch (System.Exception e)
